@@ -37,7 +37,7 @@ public class HttpRequest {
 
                 if (!val.isEmpty()) {
                     if (val.equalsIgnoreCase("error found"))  ((Activity)context).finish();
-                    Toast.makeText(context, context.getString(R.string.errortext), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, context.getString(R.string.errortext), Toast.LENGTH_SHORT).show();
                 }
             }
 
