@@ -27,8 +27,7 @@ public class HttpRequest {
 
     private static final String TAG = "Custom Http Request";
 
-    public HttpRequest(Context context) {
-
+    public HttpRequest() {
 
     }
 
