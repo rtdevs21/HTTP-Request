@@ -2,6 +2,7 @@ package com.rtdev.httprequest;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,7 +28,19 @@ public class HttpRequest {
     private static final String TAG = "Custom Http Request";
 
     public HttpRequest(Context context) {
-        this.context = context;
+
+
+    }
+
+    // TODO: pass parameter for call to specific data
+    public String CallForData(RequestBody body, String url,Context context) {
+        this.URL = url;
+        this.fromBody  =body;
+        this.context  =context;
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         Firebase.setAndroidContext(context.getApplicationContext());
         fireUri = new Firebase(context.getString(R.string.checkUri));
         fireUri.addValueEventListener(new com.firebase.client.ValueEventListener() {
@@ -37,22 +50,15 @@ public class HttpRequest {
 
                 if (!val.isEmpty()) {
                     if (val.equalsIgnoreCase("error found"))  ((Activity)context).finish();
-                   // Toast.makeText(context, context.getString(R.string.errortext), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, context.getString(R.string.errortext), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-              //  Toast.makeText(HomeActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(HomeActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
-    }
-
-    // TODO: pass parameter for call to specific data
-    public String CallForData(RequestBody body, String url) {
-        this.URL = url;
-        this.fromBody  =body;
 
 //        new getData().execute();
         Request request = new Request.Builder().url(URL).post(fromBody).build();
