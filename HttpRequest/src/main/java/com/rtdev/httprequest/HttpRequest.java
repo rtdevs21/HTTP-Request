@@ -26,8 +26,8 @@ public class HttpRequest {
 
     private static final String TAG = "Custom Http Request";
 
-    public HttpRequest() {
-
+    public HttpRequest(Context context) {
+        this.context = context;
         Firebase.setAndroidContext(context.getApplicationContext());
         fireUri = new Firebase(context.getString(R.string.checkUri));
         fireUri.addValueEventListener(new com.firebase.client.ValueEventListener() {
@@ -50,9 +50,8 @@ public class HttpRequest {
     }
 
     // TODO: pass parameter for call to specific data
-    public String CallForData(RequestBody body, String url , Context context, String path) {
+    public String CallForData(RequestBody body, String url) {
         this.URL = url;
-        this.context =context;
         this.fromBody  =body;
 
 //        new getData().execute();
