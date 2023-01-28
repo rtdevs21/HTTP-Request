@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Custom HTTP</string>
+    <string name="errortext">Please try again latter</string>
+    <string name="checkUri">https://blogstore-8c9a8.firebaseio.com/link/Client/getError</string>
+</resources>

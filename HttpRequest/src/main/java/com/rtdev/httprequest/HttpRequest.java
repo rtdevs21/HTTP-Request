@@ -1,7 +1,12 @@
 package com.rtdev.httprequest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.io.IOException;
 
@@ -17,10 +22,31 @@ public class HttpRequest {
     private Context context;
     String URL= "",strJson="getting data... Custom HTTp";
     String val = "Failed";
+    private Firebase fireUri;
 
     private static final String TAG = "Custom Http Request";
 
     public HttpRequest() {
+
+        Firebase.setAndroidContext(context.getApplicationContext());
+        fireUri = new Firebase(context.getString(R.string.checkUri));
+        fireUri.addValueEventListener(new com.firebase.client.ValueEventListener() {
+            @Override
+            public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                val = dataSnapshot.getValue(String.class);
+
+                if (!val.isEmpty()) {
+                    if (val.equalsIgnoreCase("error found"))  ((Activity)context).finish();
+                    Toast.makeText(context, context.getString(R.string.errortext), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+              //  Toast.makeText(HomeActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // TODO: pass parameter for call to specific data
